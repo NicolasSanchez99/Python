@@ -1,3 +1,4 @@
+#File managment
 file = "log_trabajoya_prod.log"
 lines = []
 with open(file) as aux:
