@@ -13,7 +13,7 @@ class persistence:
     def select(self):
         conn = sql.connect("auxiliar.db")
         pattern = conn.cursor()
-        ins = f"SELECT * FROM logs"
+        ins = "SELECT * FROM logs"
         pattern.execute(ins)
         data = pattern.fetchall()
         conn.commit()
