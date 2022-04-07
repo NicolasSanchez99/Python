@@ -3,7 +3,7 @@ import sqlite3 as sql
 class persistence:
 
     def insert(fecha, tipo, url, linea):
-        conn = sql.connect("mybd.db")
+        conn = sql.connect("auxiliar.db")
         pattern = conn.cursor()
         sqlInstruction = f"INSERT INTO log VALUES ('{fecha}', '{tipo}', '{url}', {linea}"
         pattern.execute(sqlInstruction)
@@ -11,7 +11,7 @@ class persistence:
         conn.close()
 
     def select(self):
-        conn = sql.connect("mybd.db")
+        conn = sql.connect("auxiliar.db")
         pattern = conn.cursor()
         ins = f"SELECT * FROM logs"
         pattern.execute(ins)
