@@ -1,62 +1,33 @@
 import re
-from APP.persistence.bd import insert
-from APP.persistence.bd import select
-
-def loadDomain():
-    lines = []
-    date_all = []
-    domain = []
-    capital = []
-    aux = []
-    file = "log_trabajoya_prod.log"
-    with open(file) as aux:
-        for i, line in enumerate(aux.readlines()):
-            if i == 20:
-                break
-            lines.append(line)
-    len(lines)
-
-    for i, lista in enumerate(lines):
-        domain = re.findall(
-            "([\d{4}\-\d{1,2}\-\d{1,2}\s\d{1,2}:\d{1,2}]+[[a-z0-9.:\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\,]*])",
-            lines[i])
-        if len(domain) == 0:
-            continue
-        else:
-            settle = re.findall("[a-z._]+", domain[1])
-            if len(settle) == 0:
-                continue
-            print(settle)
+from APP.persistence.bd import insert_log
 
 
-def loadLine():
-    lines = []
-    date_all = []
-    domain = []
-    capital = []
-    aux = []
-    file = "log_trabajoya_prod.log"
-    with open(file) as aux:
-        for i, line in enumerate(aux.readlines()):
-            if i == 30:
-                break
-            lines.append(line)
-    len(lines)
+def main():
+    valid_information = extract_valid_information_of_file("log_trabajoya_prod.log")
+    insert_information(valid_information)
 
-    for i, lista in enumerate(lines):
-        domain = re.findall(
-            "([A-Z[\d{4}\-\d{1,2}\-\d{1,2}\s\d{1,2}:\d{1,2}]+[[a-z0-9.:\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\,]*])",
-            lines[i])
-        if len(domain) == 0 or len(domain[1]) <=5:
-            continue
-        else:
-            settleLine = re.findall("[0-9]+", domain[1])
-            settle2Info = re.findall("[A-Z]\w*", domain[1])
-            settleFecha = domain[0]
-            settleUrl = re.findall("[a-z._]+", domain[1])
-            print(settle2Info[0])
-            #insert(settleFecha,settle2Info, settleUrl[0], settleLine[0])
+
+def extract_valid_information_of_file(file_name):
+    valid_information = []
+
+    with open(file_name) as file:
+        for line in file.readlines():
+            maches = re.findall("(\[(.+)\] ([A-Z]+) \[(.+):(.+)\]) ", line)
+            if maches:
+                valid_information.append({
+                    'datetime': maches[0][1],
+                    'type_message': maches[0][2],
+                    'filepath': maches[0][3],
+                    'line': maches[0][4],
+                })
+
+    return valid_information
+
+
+def insert_information(data):
+    for log in data:
+        insert_log(log)
 
 
 if __name__ == "__main__":
-    loadLine()
+    main()
