@@ -1,6 +1,5 @@
 from APP.controller.file_controller import file_controller
-from APP.persistence.bd import insert
-from APP.persistence.bd import select
+
 
 if __name__ == "__main__" :
         fl= file_controller()
@@ -13,5 +12,5 @@ if __name__ == "__main__" :
         print('-------------')
         fl.loadLine(file)
         print('-------------')
-        select()
+        #elect()
 

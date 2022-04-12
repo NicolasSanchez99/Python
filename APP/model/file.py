@@ -4,6 +4,7 @@ class file:
     archivo = ''
     linea = ''
 
+
     def print_fecha(self):
         print(self.name)
 
@@ -15,4 +16,6 @@ class file:
 
     def print_linea(self):
         print(self.linea)
+
+
 

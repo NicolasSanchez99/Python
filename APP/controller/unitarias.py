@@ -10,7 +10,7 @@ class testLoad(unittest.TestCase):
         file = "prove.txt"
         self.assertEqual(load.load(file) ,"No file found")
         self.assertEqual(load.loadLine(file=None), "No file found")
-
+        self
 
 if __name__ == 'main':
     unittest.main()
