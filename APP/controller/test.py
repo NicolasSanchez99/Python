@@ -27,7 +27,9 @@ def extract_valid_information_of_file(file_name):
 
         return valid_information
     except FileNotFoundError:
+        return False
         print("No file was found")
+
 
 
 def insert_information(data):
@@ -37,11 +39,16 @@ def insert_information(data):
 
 
 if __name__ == "__main__":
-    #scan = input('INGRESE NOMBRE DE ARCHIVO')
-   # extract_valid_information_of_file(scan)
-    base = baseSQL()
-    base.file= "base.db"
-    create_bd(base.file)
+    scan = input('INGRESE NOMBRE DE ARCHIVO')
+    extract_valid_information_of_file(scan)
+    if extract_valid_information_of_file(scan) == False:
+        print("ERROR WHILE LOCATING FILE, TRY AGAIN")
+    else:
+        base = baseSQL()
+        base.file = "base.db"
+        create_bd(base.file)
+
+
 
 
 
